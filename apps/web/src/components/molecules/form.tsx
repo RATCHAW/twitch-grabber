@@ -5,30 +5,52 @@ import { useForm } from "react-hook-form"
 import { twitchClipSchema } from "@repo/validation"
 import { z } from "zod"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-
+import { useMutation } from "@tanstack/react-query"
+import { twitch } from "@/utils/api/twitch"
 const ClipForm = () => {
   const form = useForm<z.infer<typeof twitchClipSchema.shape.body>>({
     resolver: zodResolver(twitchClipSchema.shape.body),
+    defaultValues: {
+      clip_url: "",
+    },
   })
+
+  const { mutate, isPending } = useMutation({
+    mutationKey: ["clip"],
+    mutationFn: (clip_url: string) => twitch.clipDirectUrl(clip_url),
+    onSuccess: (data) => {
+      window.open(data.direct_url, "_blank")
+    },
+    onError: () => {
+      form.setError("clip_url", { message: "Couldn't find clip" })
+    },
+  })
+
+  const onSubmit = (data: z.infer<typeof twitchClipSchema.shape.body>) => {
+    mutate(data.clip_url)
+  }
 
   return (
     <Form {...form}>
-      <form className="flex space-y-4 flex-col h-full justify-center items-center">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex space-y-4 flex-col h-full justify-center items-center"
+      >
         <FormField
           control={form.control}
           name="clip_url"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Clip URL</FormLabel>
+              <FormLabel className="text-white">Clip URL</FormLabel>
               <FormControl>
                 <Input className="w-96" {...field} />
               </FormControl>
-              <FormDescription>This is your public display name.</FormDescription>
+              <FormDescription>Enter the URL of the clip</FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button>Download</Button>
+        <Button disabled={isPending}>{isPending ? "Loading..." : "Download"}</Button>
       </form>
     </Form>
   )

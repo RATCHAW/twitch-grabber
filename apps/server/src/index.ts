@@ -1,8 +1,27 @@
 import express, { NextFunction, Request, Response } from "express"
 import env from "./utils/env"
 import { twitchRouter } from "./routes/twitch"
+import cors from "cors"
 
 const app = express()
+
+const corslinks = env.CORS_LINKS_LIST.split(",")
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      console.log("Origin: ", origin)
+      const origins = corslinks
+      if (!origin || origins.includes(String(origin))) {
+        callback(null, true)
+      } else {
+        callback(new Error("Not allowed."), false)
+      }
+    },
+    credentials: true,
+    optionsSuccessStatus: 200,
+  }),
+)
+
 app.use(
   express.json({
     limit: "20mb",

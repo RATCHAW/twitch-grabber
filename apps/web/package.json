@@ -10,10 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@repo/validation": "workspace:*",
     "@hookform/resolvers": "^3.6.0",
     "@radix-ui/react-label": "^2.1.0",
     "@radix-ui/react-slot": "^1.1.0",
+    "@repo/validation": "workspace:*",
+    "@tanstack/react-query": "^5.48.0",
     "axios": "^1.7.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
@@ -26,6 +27,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@tanstack/eslint-plugin-query": "^5.47.0",
     "@types/node": "^20.14.8",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
