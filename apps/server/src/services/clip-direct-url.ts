@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const ClipDirectUrl = async (originalUrl: string) => {
+const clipDirectUrl = async (originalUrl: string) => {
   try {
     const parts = originalUrl.split("/")
     const clip_id = parts[parts.length - 1]
@@ -41,4 +41,4 @@ const ClipDirectUrl = async (originalUrl: string) => {
   }
 }
 
-export default ClipDirectUrl
+export default clipDirectUrl

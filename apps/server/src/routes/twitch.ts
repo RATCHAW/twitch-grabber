@@ -1,6 +1,6 @@
 import { Router } from "express"
-import downloadClip from "@/controllers/twitch/download-clip"
+import clipDirectUrlHandler from "@/controllers/twitch/clip-direct-url-handler"
 
-export const authRouter: Router = Router()
+export const twitchRouter: Router = Router()
 
-authRouter.post("/download", downloadClip)
+twitchRouter.post("/clip", clipDirectUrlHandler)

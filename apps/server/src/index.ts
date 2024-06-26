@@ -1,5 +1,6 @@
 import express, { NextFunction, Request, Response } from "express"
 import env from "./utils/env"
+import { twitchRouter } from "./routes/twitch"
 
 const app = express()
 app.use(
@@ -19,6 +20,8 @@ app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
     message: "Internal server error",
   })
 })
+
+app.use("/twitch", twitchRouter)
 
 app.listen(env.PORT, () => {
   console.log(`Server is running on port ${env.PORT}`)
