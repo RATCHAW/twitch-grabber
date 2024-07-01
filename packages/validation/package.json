@@ -1,15 +1,17 @@
 {
   "name": "@repo/validation",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "type": "module",
+  "description": "module",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsc && tsc-alias"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
-    "tsc-alias": "^1.8.10"
+    "tsc-alias": "^1.8.10",
+    "typescript": "^5.5.2"
   },
   "keywords": [],
   "author": "",

@@ -2,6 +2,9 @@ import express, { NextFunction, Request, Response } from "express"
 import env from "./utils/env"
 import { twitchRouter } from "./routes/twitch"
 import cors from "cors"
+import { authRouter } from "./routes/auth"
+import passport from "passport"
+import { GoogleAuth2Strategy } from "./strategies/google-strategy"
 
 const app = express()
 
@@ -33,14 +36,18 @@ app.use(
   }),
 )
 
+app.use(passport.initialize())
+passport.use(GoogleAuth2Strategy)
+
+app.use("/twitch", twitchRouter)
+app.use("/auth", authRouter)
+
 app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
   console.error(error)
   return res.status(500).json({
     message: "Internal server error",
   })
 })
-
-app.use("/twitch", twitchRouter)
 
 app.listen(env.PORT, () => {
   console.log(`Server is running on port ${env.PORT}`)
