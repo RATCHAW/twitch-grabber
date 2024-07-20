@@ -1,20 +1,32 @@
 import axios from "axios"
 
 const clipDirectUrl = async (originalUrl: string) => {
-  const parts = originalUrl.split("/")
+  const url = new URL(originalUrl)
+  const modifiedUrl = url.toString()
+  const parts = modifiedUrl.split("/")
   const clip_id = parts[parts.length - 1]
 
+  console.log(modifiedUrl)
   const requestData = [
     {
+      operationName: "ClipMetadata",
+      variables: {},
       extensions: {
-        persistedQuery: {
-          sha256Hash: "36b89d2507fce29e5ca551df756d27c1cfe079e2609642b4390aa4c35796eb11",
-          version: 1,
-        },
+        persistedQuery: { version: 1, sha256Hash: "49817470e0129051cd93c86069aee755795f1a952688f0111bac71a49841ece7" },
       },
-      operationName: "VideoAccessToken_Clip",
-      variables: {
-        slug: clip_id,
+    },
+    {
+      operationName: "ShareClipRenderStatus",
+      variables: { slug: clip_id },
+      extensions: {
+        persistedQuery: { version: 1, sha256Hash: "f130048a462a0ac86bb54d653c968c514e9ab9ca94db52368c1179e97b0f16eb" },
+      },
+    },
+    {
+      operationName: "GetDisplayName",
+      variables: { login: "" },
+      extensions: {
+        persistedQuery: { version: 1, sha256Hash: "ba351b3d3018c3779fcaa398507e41579ae6cf12ad123a04f090943c21dedb8a" },
       },
     },
   ]
@@ -26,7 +38,7 @@ const clipDirectUrl = async (originalUrl: string) => {
     },
   })
   if (twitchClipData) {
-    const data: string = twitchClipData?.data[0]?.data.clip?.videoQualities[0]?.sourceURL
+    const data: string = twitchClipData?.data[1]?.data?.clip?.videoQualities[0]?.sourceURL
     if (!data) {
       return null
     }
