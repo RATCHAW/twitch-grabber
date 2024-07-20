@@ -1,9 +1,9 @@
-import Form from "./components/molecules/form"
+import ClipForm from "./components/organisms/clip-form"
 
 function App() {
   return (
-    <div className="h-screen bg-black">
-      <Form />
+    <div className="flex justify-center items-center h-screen ">
+      <ClipForm />
     </div>
   )
 }

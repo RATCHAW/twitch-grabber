@@ -6,7 +6,6 @@ const clipDirectUrl = async (originalUrl: string) => {
   const parts = modifiedUrl.split("/")
   const clip_id = parts[parts.length - 1]
 
-  console.log(modifiedUrl)
   const requestData = [
     {
       operationName: "ClipMetadata",
