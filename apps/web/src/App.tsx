@@ -1,9 +1,9 @@
-import ClipForm from "./components/organisms/clip-form"
+import { Outlet } from "react-router-dom"
 
 function App() {
   return (
     <div className="flex justify-center items-center h-screen ">
-      <ClipForm />
+      <Outlet />
     </div>
   )
 }

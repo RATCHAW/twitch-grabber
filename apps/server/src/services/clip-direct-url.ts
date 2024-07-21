@@ -2,7 +2,7 @@ import axios from "axios"
 
 const clipDirectUrl = async (originalUrl: string) => {
   const url = new URL(originalUrl)
-  const modifiedUrl = url.toString()
+  const modifiedUrl = url.pathname
   const parts = modifiedUrl.split("/")
   const clip_id = parts[parts.length - 1]
 
